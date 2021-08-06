@@ -13,6 +13,8 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Credits", style: .plain, target: self, action: #selector(showCredits))
+        
         let urlString: String
         
         if navigationController?.tabBarItem.tag == 0 {
@@ -29,6 +31,12 @@ class ViewController: UITableViewController {
         }
         
         showError()
+    }
+    
+    @objc func showCredits() {
+        let ac = UIAlertController(title: nil, message: "The data comes from the We The People of the Whitehouse.", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
     }
     
     func showError() {
