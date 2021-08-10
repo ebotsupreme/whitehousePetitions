@@ -56,10 +56,15 @@ class ViewController: UITableViewController {
     }
     
     func submit(_ petition: String) {
-        let stringToLower = petition.lowercased()
-        
-        filteredPetitions = petitions.filter { $0.title.localizedCaseInsensitiveContains(stringToLower) || $0.body.localizedCaseInsensitiveContains(stringToLower) }
-        tableView.reloadData()
+        DispatchQueue.global().async { [weak self] in
+            let stringToLower = petition.lowercased()
+            
+            self?.filteredPetitions = self!.petitions.filter { $0.title.localizedCaseInsensitiveContains(stringToLower) || $0.body.localizedCaseInsensitiveContains(stringToLower) }
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.tableView.reloadData()
+            }
+        }
     }
     
     func showError() {
